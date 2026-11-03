@@ -37,3 +37,51 @@ export type ProdutoDetalhe = Produto & {
   aceitaAdicionais: boolean
   adicionais: Adicional[]
 }
+
+export type TipoEntrega = 'ENTREGA' | 'RETIRADA'
+export type FormaPagamento = 'DINHEIRO' | 'CARTAO' | 'PIX'
+export type StatusPedido =
+  | 'RECEBIDO'
+  | 'EM_PREPARO'
+  | 'PRONTO'
+  | 'SAIU_PARA_ENTREGA'
+  | 'ENTREGUE'
+  | 'CANCELADO'
+
+export type ItemDoPedido = {
+  id: number
+  quantidade: number
+  observacao: string | null
+  precoUnitario: Preco
+  produto: { id: number; nome: string }
+  tamanho: { id: number; nome: string }
+  adicionais: { id: number; preco: Preco; adicional: { id: number; nome: string } }[]
+}
+
+export type Pedido = {
+  id: number
+  cliente: string
+  telefone: string
+  endereco: string | null
+  tipo: TipoEntrega
+  pagamento: FormaPagamento
+  status: StatusPedido
+  total: Preco
+  criadoEm: string
+  itens: ItemDoPedido[]
+}
+
+export type NovoPedido = {
+  cliente: string
+  telefone: string
+  tipo: TipoEntrega
+  endereco?: string
+  pagamento: FormaPagamento
+  itens: {
+    produtoId: number
+    tamanhoId: number
+    adicionais: number[]
+    quantidade: number
+    observacao?: string
+  }[]
+}
