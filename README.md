@@ -1,7 +1,6 @@
 # Cardápio Digital — Açaí da Orla
 
-> **Site:** _em breve_ · **API (Swagger):** _em breve_
-> <!-- Depois do deploy: [site](https://SEU-SITE.vercel.app) · [Swagger](https://SEU-SERVICO.onrender.com/docs) -->
+> **Site:** [cardapio-acai.vercel.app](https://cardapio-acai.vercel.app) · **API (Swagger):** [acai-da-orla-api.onrender.com/docs](https://acai-da-orla-api.onrender.com/docs)
 
 O cliente monta o açaí pelo celular e faz o pedido, e o dono acompanha tudo num painel. O pagamento é na entrega, e o resumo do pedido vai para a loja pelo WhatsApp.
 
