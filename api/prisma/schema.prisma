@@ -1,0 +1,118 @@
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  moduleFormat        = "esm"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Categoria {
+  id       Int       @id @default(autoincrement())
+  nome     String    @unique
+  ordem    Int       @default(0)
+  produtos Produto[]
+}
+
+model Produto {
+  id          Int          @id @default(autoincrement())
+  nome        String
+  descricao   String
+  imagem      String?
+  ativo       Boolean      @default(true)
+  categoriaId Int
+  categoria   Categoria    @relation(fields: [categoriaId], references: [id])
+  tamanhos    Tamanho[]
+  itens       ItemPedido[]
+
+  @@index([categoriaId])
+}
+
+model Tamanho {
+  id        Int          @id @default(autoincrement())
+  nome      String
+  preco     Decimal      @db.Decimal(10, 2)
+  produtoId Int
+  produto   Produto      @relation(fields: [produtoId], references: [id], onDelete: Cascade)
+  itens     ItemPedido[]
+
+  @@index([produtoId])
+}
+
+model Adicional {
+  id    Int             @id @default(autoincrement())
+  nome  String          @unique
+  preco Decimal         @db.Decimal(10, 2)
+  ativo Boolean         @default(true)
+  itens ItemAdicional[]
+}
+
+enum StatusPedido {
+  RECEBIDO
+  EM_PREPARO
+  PRONTO
+  SAIU_PARA_ENTREGA
+  ENTREGUE
+  CANCELADO
+}
+
+enum TipoEntrega {
+  ENTREGA
+  RETIRADA
+}
+
+enum FormaPagamento {
+  DINHEIRO
+  CARTAO
+  PIX
+}
+
+model Pedido {
+  id        Int            @id @default(autoincrement())
+  cliente   String
+  telefone  String
+  endereco  String?
+  tipo      TipoEntrega
+  pagamento FormaPagamento
+  status    StatusPedido   @default(RECEBIDO)
+  total     Decimal        @db.Decimal(10, 2)
+  criadoEm  DateTime       @default(now())
+  itens     ItemPedido[]
+
+  @@index([status, criadoEm])
+}
+
+model ItemPedido {
+  id            Int             @id @default(autoincrement())
+  pedidoId      Int
+  pedido        Pedido          @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+  produtoId     Int
+  produto       Produto         @relation(fields: [produtoId], references: [id])
+  tamanhoId     Int
+  tamanho       Tamanho         @relation(fields: [tamanhoId], references: [id])
+  quantidade    Int
+  observacao    String?
+  precoUnitario Decimal         @db.Decimal(10, 2)
+  adicionais    ItemAdicional[]
+
+  @@index([pedidoId])
+}
+
+model ItemAdicional {
+  id           Int        @id @default(autoincrement())
+  itemPedidoId Int
+  itemPedido   ItemPedido @relation(fields: [itemPedidoId], references: [id], onDelete: Cascade)
+  adicionalId  Int
+  adicional    Adicional  @relation(fields: [adicionalId], references: [id])
+  preco        Decimal    @db.Decimal(10, 2)
+
+  @@index([itemPedidoId])
+}
+
+model Usuario {
+  id    Int    @id @default(autoincrement())
+  email String @unique
+  senha String
+}

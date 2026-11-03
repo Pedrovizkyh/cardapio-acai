@@ -4,6 +4,7 @@ dist/
 build/
 coverage/
 *.tsbuildinfo
+api/src/generated/
 
 # Variáveis de ambiente
 .env
