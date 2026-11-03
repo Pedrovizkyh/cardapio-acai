@@ -87,3 +87,18 @@ export const useRemoverTamanho = () =>
   useMutacaoDoCardapio(async (id: number) => {
     await api.delete(`/admin/tamanhos/${id}`)
   })
+
+export const useCriarAdicional = () =>
+  useMutacaoDoCardapio(async (dados: DadosAdicional) =>
+    (await api.post<Adicional>('/admin/adicionais', dados)).data,
+  )
+
+export const useAtualizarAdicional = () =>
+  useMutacaoDoCardapio(async ({ id, ...dados }: Partial<DadosAdicional> & { id: number }) =>
+    (await api.patch<Adicional>(`/admin/adicionais/${id}`, dados)).data,
+  )
+
+export const useRemoverAdicional = () =>
+  useMutacaoDoCardapio(async (id: number) => {
+    await api.delete(`/admin/adicionais/${id}`)
+  })
