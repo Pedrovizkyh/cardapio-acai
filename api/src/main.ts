@@ -1,7 +1,8 @@
 import { ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module.js';
+import { PrismaExceptionFilter } from './common/prisma-exception.filter.js';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -13,6 +14,9 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
+  const { httpAdapter } = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new PrismaExceptionFilter(httpAdapter));
 
   const config = new DocumentBuilder()
     .setTitle('Açaí da Orla — API')
