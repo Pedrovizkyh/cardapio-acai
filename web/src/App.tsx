@@ -3,6 +3,7 @@ import Layout from './components/Layout.tsx'
 import Cardapio from './pages/Cardapio.tsx'
 import Carrinho from './pages/Carrinho.tsx'
 import Checkout from './pages/Checkout.tsx'
+import Confirmacao from './pages/Confirmacao.tsx'
 import EmConstrucao from './pages/EmConstrucao.tsx'
 import Montagem from './pages/Montagem.tsx'
 
@@ -14,7 +15,7 @@ export default function App() {
         <Route path="/produto/:id" element={<Montagem />} />
         <Route path="/carrinho" element={<Carrinho />} />
         <Route path="/checkout" element={<Checkout />} />
-        <Route path="/pedido/confirmado" element={<EmConstrucao titulo="Pedido recebido" />} />
+        <Route path="/pedido/confirmado" element={<Confirmacao />} />
         <Route path="*" element={<EmConstrucao titulo="Página não encontrada" />} />
       </Route>
       <Route path="/admin/*" element={<EmConstrucao titulo="Painel" />} />
