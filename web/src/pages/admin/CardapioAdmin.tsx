@@ -1,10 +1,12 @@
 import { useSearchParams } from 'react-router'
 import AdicionaisAdmin from './AdicionaisAdmin.tsx'
+import CategoriasAdmin from './CategoriasAdmin.tsx'
 import ProdutosAdmin from './ProdutosAdmin.tsx'
 
 const abas = [
   { id: 'produtos', rotulo: 'Produtos' },
   { id: 'adicionais', rotulo: 'Adicionais' },
+  { id: 'categorias', rotulo: 'Categorias' },
 ] as const
 
 type Aba = (typeof abas)[number]['id']
@@ -30,6 +32,7 @@ export default function CardapioAdmin() {
       </nav>
       {aba === 'produtos' && <ProdutosAdmin />}
       {aba === 'adicionais' && <AdicionaisAdmin />}
+      {aba === 'categorias' && <CategoriasAdmin />}
     </section>
   )
 }

@@ -102,3 +102,18 @@ export const useRemoverAdicional = () =>
   useMutacaoDoCardapio(async (id: number) => {
     await api.delete(`/admin/adicionais/${id}`)
   })
+
+export const useCriarCategoria = () =>
+  useMutacaoDoCardapio(async (dados: DadosCategoria) =>
+    (await api.post<CategoriaAdmin>('/admin/categorias', dados)).data,
+  )
+
+export const useAtualizarCategoria = () =>
+  useMutacaoDoCardapio(async ({ id, ...dados }: Partial<DadosCategoria> & { id: number }) =>
+    (await api.patch<CategoriaAdmin>(`/admin/categorias/${id}`, dados)).data,
+  )
+
+export const useRemoverCategoria = () =>
+  useMutacaoDoCardapio(async (id: number) => {
+    await api.delete(`/admin/categorias/${id}`)
+  })
