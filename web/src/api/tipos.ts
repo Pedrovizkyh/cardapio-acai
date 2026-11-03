@@ -22,6 +22,7 @@ export type Categoria = {
   id: number
   nome: string
   ordem: number
+  aceitaAdicionais: boolean
   produtos: Produto[]
 }
 
@@ -32,4 +33,7 @@ export type Adicional = {
   ativo: boolean
 }
 
-export type ProdutoDetalhe = Produto & { adicionais: Adicional[] }
+export type ProdutoDetalhe = Produto & {
+  aceitaAdicionais: boolean
+  adicionais: Adicional[]
+}
