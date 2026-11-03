@@ -17,7 +17,7 @@ export class ProdutosService {
 
   listar() {
     return this.prisma.produto.findMany({
-      orderBy: [{ categoria: { ordem: 'asc' } }, { nome: 'asc' }],
+      orderBy: [{ categoria: { ordem: 'asc' } }, { id: 'asc' }],
       include: comTamanhos,
     });
   }

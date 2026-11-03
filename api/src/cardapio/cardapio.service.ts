@@ -11,7 +11,7 @@ export class CardapioService {
       include: {
         produtos: {
           where: { ativo: true },
-          orderBy: { nome: 'asc' },
+          orderBy: { id: 'asc' },
           include: { tamanhos: { orderBy: { preco: 'asc' } } },
         },
       },
