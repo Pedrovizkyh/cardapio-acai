@@ -7,6 +7,12 @@ import { PrismaExceptionFilter } from './common/prisma-exception.filter.js';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Lista separada por vírgula, ex.: "http://localhost:5173,https://acai.vercel.app"
+  const origens = (process.env.CORS_ORIGIN ?? 'http://localhost:5173')
+    .split(',')
+    .map((origem) => origem.trim());
+  app.enableCors({ origin: origens });
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
