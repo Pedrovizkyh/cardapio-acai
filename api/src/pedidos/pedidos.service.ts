@@ -1,10 +1,17 @@
-import { Injectable } from '@nestjs/common';
-import { TipoEntrega } from '../generated/prisma/enums.js';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { StatusPedido, TipoEntrega } from '../generated/prisma/enums.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { CriarPedidoDto } from './dto/criar-pedido.dto.js';
 import { detalhesDoPedido } from './pedido.include.js';
 import { calcularTotal } from './regras/calculo.js';
 import { montarItens } from './regras/montagem.js';
+import { podeMudarStatus, proximosStatus } from './regras/status.js';
+
+const LIMITE_PAINEL = 100;
 
 @Injectable()
 export class PedidosService {
@@ -59,5 +66,48 @@ export class PedidosService {
         include: detalhesDoPedido,
       });
     });
+  }
+
+  async listar(status?: StatusPedido) {
+    const pedidos = await this.prisma.pedido.findMany({
+      where: { status },
+      orderBy: { criadoEm: 'desc' },
+      take: LIMITE_PAINEL,
+      include: detalhesDoPedido,
+    });
+    return pedidos.map((pedido) => ({
+      ...pedido,
+      proximosStatus: proximosStatus(pedido.status, pedido.tipo),
+    }));
+  }
+
+  async mudarStatus(id: number, novo: StatusPedido) {
+    const pedido = await this.prisma.pedido.findUnique({ where: { id } });
+    if (!pedido) {
+      throw new NotFoundException('Pedido não encontrado');
+    }
+    if (!podeMudarStatus(pedido.status, novo, pedido.tipo)) {
+      throw new ConflictException(
+        `Não dá para ir de ${pedido.status} para ${novo}`,
+      );
+    }
+
+    // Só grava se ninguém mudou o status entre a leitura e a escrita.
+    const { count } = await this.prisma.pedido.updateMany({
+      where: { id, status: pedido.status },
+      data: { status: novo },
+    });
+    if (count === 0) {
+      throw new ConflictException('O pedido mudou; atualize a tela');
+    }
+
+    const atualizado = await this.prisma.pedido.findUniqueOrThrow({
+      where: { id },
+      include: detalhesDoPedido,
+    });
+    return {
+      ...atualizado,
+      proximosStatus: proximosStatus(atualizado.status, atualizado.tipo),
+    };
   }
 }
