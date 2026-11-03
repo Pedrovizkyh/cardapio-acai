@@ -1,18 +1,23 @@
+import Tigela from './Tigela.tsx'
+
 type Props = {
   imagem: string | null
   nome: string
-  emoji: string
+  id?: number
+  esgotado?: boolean
   className?: string
 }
 
-export default function ImagemProduto({ imagem, nome, emoji, className = '' }: Props) {
+const fundos = ['bg-acai-800', 'bg-acai-700', 'bg-acai-900']
+
+export default function ImagemProduto({ imagem, nome, id = 0, esgotado = false, className = '' }: Props) {
   if (imagem) {
     return (
       <img
         src={imagem}
         alt={nome}
         loading="lazy"
-        className={`object-cover ${className}`}
+        className={`object-cover ${esgotado ? 'opacity-50 grayscale' : ''} ${className}`}
       />
     )
   }
@@ -21,11 +26,9 @@ export default function ImagemProduto({ imagem, nome, emoji, className = '' }: P
     <div
       role="img"
       aria-label={nome}
-      className={`flex items-center justify-center bg-linear-to-br from-acai-500 via-acai-700 to-acai-900 ${className}`}
+      className={`flex items-center justify-center ${esgotado ? 'bg-acai-200' : fundos[id % fundos.length]} ${className}`}
     >
-      <span aria-hidden className="text-4xl drop-shadow">
-        {emoji}
-      </span>
+      <Tigela esgotado={esgotado} className="w-[68%]" />
     </div>
   )
 }

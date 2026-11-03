@@ -9,7 +9,7 @@ export type ItemCarrinho = {
   chave: string
   produtoId: number
   produtoNome: string
-  emoji: string
+  imagem?: string | null
   tamanhoId: number
   tamanhoNome: string
   precoTamanho: Preco
@@ -26,6 +26,7 @@ type EstadoCarrinho = {
   itens: ItemCarrinho[]
   adicionar: (item: NovoItem) => void
   alterarQuantidade: (chave: string, quantidade: number) => void
+  substituir: (chave: string, item: NovoItem) => void
   remover: (chave: string) => void
   limpar: () => void
 }
@@ -34,6 +35,15 @@ type EstadoCarrinho = {
 function chaveDoItem(item: NovoItem): string {
   const adicionais = item.adicionais.map((a) => a.id).sort((a, b) => a - b)
   return [item.produtoId, item.tamanhoId, adicionais.join('.'), item.observacao.trim()].join('|')
+}
+
+function novaLinha(item: NovoItem): ItemCarrinho {
+  return {
+    ...item,
+    observacao: item.observacao.trim(),
+    quantidade: limitar(item.quantidade),
+    chave: chaveDoItem(item),
+  }
 }
 
 const limitar = (quantidade: number) =>
@@ -56,8 +66,26 @@ export const useCarrinho = create<EstadoCarrinho>()(
               ),
             }
           }
-          const item = { ...novo, observacao: novo.observacao.trim(), chave }
-          return { itens: [...estado.itens, { ...item, quantidade: limitar(item.quantidade) }] }
+          return { itens: [...estado.itens, novaLinha(novo)] }
+        }),
+      // Edição de um item: troca a linha no mesmo lugar. Se as novas escolhas
+      // coincidirem com outra linha, as duas viram uma só.
+      substituir: (chave, novo) =>
+        set((estado) => {
+          const linha = novaLinha(novo)
+          const outra = estado.itens.find((i) => i.chave === linha.chave && i.chave !== chave)
+          if (outra) {
+            return {
+              itens: estado.itens
+                .filter((i) => i.chave !== chave)
+                .map((i) =>
+                  i.chave === linha.chave
+                    ? { ...i, quantidade: limitar(i.quantidade + linha.quantidade) }
+                    : i,
+                ),
+            }
+          }
+          return { itens: estado.itens.map((i) => (i.chave === chave ? linha : i)) }
         }),
       alterarQuantidade: (chave, quantidade) =>
         set((estado) => ({

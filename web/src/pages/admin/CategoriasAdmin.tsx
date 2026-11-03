@@ -14,7 +14,7 @@ import { MensagemErro } from '../../components/Estados.tsx'
 export default function CategoriasAdmin() {
   const { data, isPending, isError, error, refetch } = useCategoriasAdmin()
 
-  if (isPending) return <p className="mt-4 text-acai-700">Carregando categorias...</p>
+  if (isPending) return <p className="mt-6 text-texto-suave">Carregando categorias...</p>
   if (isError) {
     return <MensagemErro mensagem={mensagemDeErro(error)} onTentarDeNovo={() => void refetch()} />
   }
@@ -22,9 +22,9 @@ export default function CategoriasAdmin() {
   const proximaOrdem = data.reduce((maior, c) => Math.max(maior, c.ordem + 1), 0)
 
   return (
-    <div className="mt-4 space-y-3">
+    <div className="mt-6 max-w-3xl space-y-3">
       <NovaCategoria ordem={proximaOrdem} />
-      <p className="text-sm text-acai-700">
+      <p className="px-1 text-sm text-texto-suave">
         A ordem define a posição no cardápio (menor aparece primeiro).
       </p>
       <ul className="space-y-2">
@@ -57,7 +57,7 @@ function NovaCategoria({ ordem }: { ordem: number }) {
 
   return (
     <form onSubmit={enviar} className={estilos.cartao}>
-      <h2 className="font-bold">Nova categoria</h2>
+      <h2 className="titulo-secao">Nova categoria</h2>
       <div className="mt-2 flex flex-wrap items-center gap-3">
         <input
           aria-label="Nome da categoria"
@@ -72,7 +72,7 @@ function NovaCategoria({ ordem }: { ordem: number }) {
             type="checkbox"
             checked={aceitaAdicionais}
             onChange={(e) => setAceitaAdicionais(e.target.checked)}
-            className="h-5 w-5 accent-acai-700"
+            className="h-5 w-5 accent-acai-800"
           />
           Aceita adicionais
         </label>
@@ -122,14 +122,14 @@ function LinhaCategoria({ categoria }: { categoria: CategoriaAdmin }) {
           Remover
         </BotaoRemover>
       </div>
-      <div className="mt-2 flex items-center justify-between text-sm text-acai-700">
+      <div className="mt-2 flex items-center justify-between text-sm text-texto-suave">
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
             checked={categoria.aceitaAdicionais}
             disabled={atualizar.isPending}
             onChange={(e) => atualizar.mutate({ id: categoria.id, aceitaAdicionais: e.target.checked })}
-            className="h-5 w-5 accent-acai-700"
+            className="h-5 w-5 accent-acai-800"
           />
           Aceita adicionais
         </label>

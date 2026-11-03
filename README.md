@@ -21,7 +21,7 @@ O cliente monta o açaí pelo celular e faz o pedido, e o dono acompanha tudo nu
 - Cardápio por categoria (açaí, cremes, bebidas) com "a partir de R$ X".
 - Montagem do produto: tamanho, adicionais, quantidade e observação, com preço atualizando na hora.
 - Carrinho salvo no navegador.
-- Checkout com entrega ou retirada e pagamento na entrega (dinheiro, cartão ou PIX na hora).
+- Tela "Seu pedido" com carrinho e checkout juntos: editar ou remover itens, entrega ou retirada e pagamento na entrega (dinheiro, cartão ou PIX na hora).
 - Confirmação com número do pedido e botão **Enviar no WhatsApp** com o resumo pronto.
 
 **Painel do dono**
@@ -29,7 +29,7 @@ O cliente monta o açaí pelo celular e faz o pedido, e o dono acompanha tudo nu
 - Pedidos por status, atualizando sozinhos a cada 15 segundos.
 - Botões para avançar ou cancelar o pedido, seguindo as regras de status.
 - Cadastro de produtos, tamanhos, adicionais e categorias.
-- Botão de esgotado, que tira o produto do cardápio na hora.
+- Botão de esgotado: o produto aparece desabilitado no cardápio na hora e não pode ser pedido.
 
 ## Regras de negócio que importam
 

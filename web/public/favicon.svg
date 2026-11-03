@@ -1,1 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#4a1a5e"/><text x="32" y="44" font-size="34" text-anchor="middle">🍇</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#4a1458"/><circle cx="24" cy="28" r="7" fill="#c6e84a"/><circle cx="33" cy="24" r="7" fill="#f2d7a0"/><circle cx="41" cy="29" r="6.5" fill="#ef6b8a"/><rect x="11" y="31" width="42" height="5" rx="2.5" fill="#1e0d24"/><path d="M13 35h38a19 16 0 0 1-38 0z" fill="#f7f1f8"/></svg>
