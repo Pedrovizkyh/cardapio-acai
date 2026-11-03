@@ -87,3 +87,13 @@ export type NovoPedido = {
 }
 
 export type PedidoAdmin = Pedido & { proximosStatus: StatusPedido[] }
+
+export type CategoriaAdmin = {
+  id: number
+  nome: string
+  ordem: number
+  aceitaAdicionais: boolean
+  _count: { produtos: number }
+}
+
+export type ProdutoAdmin = Produto & { categoria: { id: number; nome: string } }

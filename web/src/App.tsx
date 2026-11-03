@@ -6,6 +6,8 @@ import Checkout from './pages/Checkout.tsx'
 import Confirmacao from './pages/Confirmacao.tsx'
 import EmConstrucao from './pages/EmConstrucao.tsx'
 import Montagem from './pages/Montagem.tsx'
+import CardapioAdmin from './pages/admin/CardapioAdmin.tsx'
+import EditarProduto from './pages/admin/EditarProduto.tsx'
 import LayoutAdmin from './pages/admin/LayoutAdmin.tsx'
 import Login from './pages/admin/Login.tsx'
 import PedidosAdmin from './pages/admin/PedidosAdmin.tsx'
@@ -24,7 +26,8 @@ export default function App() {
       <Route path="/admin/login" element={<Login />} />
       <Route path="/admin" element={<LayoutAdmin />}>
         <Route index element={<PedidosAdmin />} />
-        <Route path="cardapio/*" element={<EmConstrucao titulo="Cardápio" />} />
+        <Route path="cardapio" element={<CardapioAdmin />} />
+        <Route path="cardapio/produtos/:id" element={<EditarProduto />} />
       </Route>
     </Routes>
   )
