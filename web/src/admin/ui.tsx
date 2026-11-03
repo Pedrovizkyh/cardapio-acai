@@ -1,10 +1,11 @@
 import { useState, type ReactNode } from 'react'
 import { mensagemDeErro } from '../api/cliente.ts'
+import { estilos } from './estilos.ts'
 
 export function Alerta({ erro }: { erro: unknown }) {
   if (!erro) return null
   return (
-    <p role="alert" className="mt-2 rounded-lg bg-red-50 p-2 text-sm font-semibold text-red-800">
+    <p role="alert" className="mt-2 rounded-xl bg-red-50 p-3 text-sm font-semibold text-perigo">
       {mensagemDeErro(erro)}
     </p>
   )
@@ -35,14 +36,14 @@ export function BotaoRemover({
             setConfirmando(false)
             onConfirmar()
           }}
-          className="rounded-full bg-red-700 px-3 py-2 text-sm font-bold text-white hover:bg-red-800"
+          className="inline-flex h-11 items-center rounded-xl bg-perigo px-3 text-sm font-bold text-white hover:brightness-110"
         >
           {confirmacao}
         </button>
         <button
           type="button"
           onClick={() => setConfirmando(false)}
-          className="rounded-full px-3 py-2 text-sm font-semibold text-acai-700"
+          className="inline-flex h-11 items-center rounded-xl px-3 text-sm font-semibold text-texto-suave hover:bg-acai-100"
         >
           Não
         </button>
@@ -55,7 +56,7 @@ export function BotaoRemover({
       type="button"
       disabled={desabilitado}
       onClick={() => setConfirmando(true)}
-      className="rounded-full px-3 py-2 text-sm font-semibold text-red-700 ring-1 ring-red-200 hover:bg-red-50 disabled:opacity-60"
+      className={estilos.botaoPerigo}
     >
       {children}
     </button>

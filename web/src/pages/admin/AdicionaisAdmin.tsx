@@ -15,20 +15,25 @@ import { precoDigitado, precoParaCampo } from '../../lib/preco.ts'
 export default function AdicionaisAdmin() {
   const { data, isPending, isError, error, refetch } = useAdicionaisAdmin()
 
-  if (isPending) return <p className="mt-4 text-acai-700">Carregando adicionais...</p>
-  if (isError) {
-    return <MensagemErro mensagem={mensagemDeErro(error)} onTentarDeNovo={() => void refetch()} />
-  }
-
   return (
-    <div className="mt-4 space-y-3">
-      <NovoAdicional />
-      <ul className="space-y-2">
-        {data.map((adicional) => (
-          <LinhaAdicional key={adicional.id} adicional={adicional} />
-        ))}
-      </ul>
-    </div>
+    <section>
+      <h1 className={estilos.titulo}>Adicionais</h1>
+      <p className={estilos.subtitulo}>Valem para todas as categorias que aceitam adicionais.</p>
+      {isPending ? (
+        <p className="mt-6 text-texto-suave">Carregando adicionais...</p>
+      ) : isError ? (
+        <MensagemErro mensagem={mensagemDeErro(error)} onTentarDeNovo={() => void refetch()} />
+      ) : (
+        <div className="mt-6 max-w-3xl space-y-3">
+          <NovoAdicional />
+          <ul className="space-y-2">
+            {data.map((adicional) => (
+              <LinhaAdicional key={adicional.id} adicional={adicional} />
+            ))}
+          </ul>
+        </div>
+      )}
+    </section>
   )
 }
 
@@ -59,7 +64,7 @@ function NovoAdicional() {
 
   return (
     <form onSubmit={enviar} className={estilos.cartao}>
-      <h2 className="font-bold">Novo adicional</h2>
+      <h2 className="titulo-secao">Novo adicional</h2>
       <div className="mt-2 flex flex-wrap gap-2">
         <input
           aria-label="Nome do adicional"
@@ -81,7 +86,7 @@ function NovoAdicional() {
           Adicionar
         </button>
       </div>
-      {aviso && <p className="mt-2 text-sm font-semibold text-red-800">{aviso}</p>}
+      {aviso && <p className="mt-2 text-sm font-semibold text-perigo">{aviso}</p>}
       <Alerta erro={criar.error} />
     </form>
   )
@@ -107,7 +112,7 @@ function LinhaAdicional({ adicional }: { adicional: Adicional }) {
   }
 
   return (
-    <li className={`${estilos.cartao} ${adicional.ativo ? '' : 'opacity-75'}`}>
+    <li className={adicional.ativo ? estilos.cartao : 'rounded-2xl border-2 border-dashed border-acai-200 bg-acai-100/60 p-4'}>
       <div className="flex flex-wrap items-center gap-2">
         <input
           aria-label="Nome do adicional"
@@ -137,8 +142,8 @@ function LinhaAdicional({ adicional }: { adicional: Adicional }) {
           Remover
         </BotaoRemover>
       </div>
-      {!adicional.ativo && <p className="mt-1 text-xs font-semibold text-red-800">Fora do cardápio</p>}
-      {aviso && <p className="mt-1 text-sm font-semibold text-red-800">{aviso}</p>}
+      {!adicional.ativo && <p className="mt-2 text-xs font-bold text-texto-suave">Fora do cardápio</p>}
+      {aviso && <p className="mt-1 text-sm font-semibold text-perigo">{aviso}</p>}
       <Alerta erro={atualizar.error ?? remover.error} />
     </li>
   )

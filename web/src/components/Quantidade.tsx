@@ -1,3 +1,5 @@
+import Icone from './Icone.tsx'
+
 type Props = {
   valor: number
   minimo?: number
@@ -8,10 +10,14 @@ type Props = {
 
 export default function Quantidade({ valor, minimo = 1, maximo, onChange, rotulo }: Props) {
   const botao =
-    'flex h-9 w-9 items-center justify-center rounded-full bg-acai-100 text-lg font-bold text-acai-800 hover:bg-acai-200 disabled:opacity-40'
+    'flex h-10 w-10 items-center justify-center rounded-xl text-acai-950 transition hover:bg-acai-100 disabled:opacity-30 disabled:hover:bg-transparent'
 
   return (
-    <div className="flex items-center gap-3" role="group" aria-label={rotulo}>
+    <div
+      className="flex h-14 items-center gap-1 rounded-2xl bg-white px-1.5 ring-1 ring-acai-200"
+      role="group"
+      aria-label={rotulo}
+    >
       <button
         type="button"
         className={botao}
@@ -19,9 +25,9 @@ export default function Quantidade({ valor, minimo = 1, maximo, onChange, rotulo
         disabled={valor <= minimo}
         aria-label="Diminuir quantidade"
       >
-        −
+        <Icone nome="menos" />
       </button>
-      <span className="w-6 text-center font-bold" aria-live="polite">
+      <span className="w-6 text-center text-lg font-bold" aria-live="polite">
         {valor}
       </span>
       <button
@@ -31,7 +37,7 @@ export default function Quantidade({ valor, minimo = 1, maximo, onChange, rotulo
         disabled={valor >= maximo}
         aria-label="Aumentar quantidade"
       >
-        +
+        <Icone nome="mais" />
       </button>
     </div>
   )

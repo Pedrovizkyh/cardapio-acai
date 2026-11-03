@@ -13,6 +13,7 @@ import {
 import type { ProdutoAdmin, Tamanho } from '../../api/tipos.ts'
 import { estilos } from '../../admin/estilos.ts'
 import { Alerta, BotaoRemover } from '../../admin/ui.tsx'
+import Icone from '../../components/Icone.tsx'
 import { precoDigitado, precoParaCampo } from '../../lib/preco.ts'
 
 export default function EditarProduto() {
@@ -21,14 +22,17 @@ export default function EditarProduto() {
   const produto = useProdutoAdmin(id)
 
   return (
-    <div className="mt-4">
-      <Link to="/admin/cardapio" className="text-sm font-semibold text-acai-700">
-        ← Produtos
+    <div className="max-w-3xl">
+      <Link
+        to="/admin/cardapio"
+        className="inline-flex items-center gap-1 text-sm font-bold text-acai-800 underline-offset-4 hover:underline"
+      >
+        <Icone nome="voltar" className="h-4 w-4" /> Produtos
       </Link>
       {id === null ? (
         <FormularioProduto />
       ) : produto.isPending ? (
-        <p className="mt-4">Carregando...</p>
+        <p className="mt-4 text-texto-suave">Carregando...</p>
       ) : produto.isError ? (
         <Alerta erro={produto.error} />
       ) : (
@@ -93,27 +97,27 @@ function FormularioProduto({ produto }: { produto?: ProdutoAdmin }) {
   }
 
   return (
-    <form onSubmit={enviar} className={`${estilos.cartao} mt-3 space-y-3`}>
-      <h1 className="text-xl font-extrabold">{produto ? 'Editar produto' : 'Novo produto'}</h1>
+    <form onSubmit={enviar} className={`${estilos.cartao} mt-4 space-y-4 p-5`}>
+      <h1 className="font-display text-2xl font-extrabold">{produto ? 'Editar produto' : 'Novo produto'}</h1>
 
       <label className="block">
-        <span className="text-sm font-bold">Nome</span>
+        <span className="mb-1.5 block text-sm font-bold">Nome</span>
         <input value={nome} onChange={(e) => setNome(e.target.value)} maxLength={80} className={estilos.campo} />
       </label>
 
       <label className="block">
-        <span className="text-sm font-bold">Descrição</span>
+        <span className="mb-1.5 block text-sm font-bold">Descrição</span>
         <textarea
           value={descricao}
           onChange={(e) => setDescricao(e.target.value)}
           maxLength={300}
-          rows={2}
-          className={estilos.campo}
+          rows={3}
+          className={`${estilos.campo} h-auto py-2.5`}
         />
       </label>
 
       <label className="block">
-        <span className="text-sm font-bold">Categoria</span>
+        <span className="mb-1.5 block text-sm font-bold">Categoria</span>
         <select
           value={categoriaId}
           onChange={(e) => setCategoriaId(Number(e.target.value))}
@@ -131,8 +135,8 @@ function FormularioProduto({ produto }: { produto?: ProdutoAdmin }) {
       </label>
 
       <label className="block">
-        <span className="text-sm font-bold">
-          Link da imagem <span className="font-normal text-acai-600">(opcional)</span>
+        <span className="mb-1.5 block text-sm font-bold">
+          Link da imagem <span className="font-normal text-texto-suave">(opcional)</span>
         </span>
         <input
           type="url"
@@ -145,7 +149,7 @@ function FormularioProduto({ produto }: { produto?: ProdutoAdmin }) {
 
       {!produto && (
         <fieldset className="space-y-2">
-          <legend className="text-sm font-bold">Tamanhos</legend>
+          <legend className="mb-1.5 text-sm font-bold">Tamanhos</legend>
           {tamanhos.map((t, i) => (
             <div key={i} className="flex gap-2">
               <input
@@ -172,7 +176,7 @@ function FormularioProduto({ produto }: { produto?: ProdutoAdmin }) {
                   type="button"
                   aria-label={`Tirar tamanho ${i + 1}`}
                   onClick={() => setTamanhos((lista) => lista.filter((_, j) => j !== i))}
-                  className="px-2 text-red-700"
+                  className="px-2 text-perigo"
                 >
                   ✕
                 </button>
@@ -189,7 +193,7 @@ function FormularioProduto({ produto }: { produto?: ProdutoAdmin }) {
         </fieldset>
       )}
 
-      {aviso && <p className="text-sm font-semibold text-red-800">{aviso}</p>}
+      {aviso && <p className="text-sm font-semibold text-perigo">{aviso}</p>}
       <Alerta erro={mutacao.error} />
       {salvo && <p className="text-sm font-semibold text-emerald-700">Salvo!</p>}
 
@@ -226,8 +230,8 @@ function Tamanhos({ produto }: { produto: ProdutoAdmin }) {
   }
 
   return (
-    <section className={`${estilos.cartao} mt-4`}>
-      <h2 className="text-lg font-extrabold">Tamanhos</h2>
+    <section className={`${estilos.cartao} mt-4 p-5`}>
+      <h2 className="titulo-secao">Tamanhos</h2>
       <ul className="mt-2 space-y-2">
         {produto.tamanhos.map((t) => (
           <LinhaTamanho key={t.id} tamanho={t} ultimo={produto.tamanhos.length === 1} />
@@ -254,7 +258,7 @@ function Tamanhos({ produto }: { produto: ProdutoAdmin }) {
           Adicionar
         </button>
       </form>
-      {aviso && <p className="mt-2 text-sm font-semibold text-red-800">{aviso}</p>}
+      {aviso && <p className="mt-2 text-sm font-semibold text-perigo">{aviso}</p>}
       <Alerta erro={criar.error} />
     </section>
   )
@@ -304,7 +308,7 @@ function LinhaTamanho({ tamanho, ultimo }: { tamanho: Tamanho; ultimo: boolean }
           </BotaoRemover>
         )}
       </div>
-      {aviso && <p className="mt-1 text-sm font-semibold text-red-800">{aviso}</p>}
+      {aviso && <p className="mt-1 text-sm font-semibold text-perigo">{aviso}</p>}
       <Alerta erro={atualizar.error ?? remover.error} />
     </li>
   )

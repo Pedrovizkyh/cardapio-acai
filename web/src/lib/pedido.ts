@@ -10,7 +10,7 @@ import { emCentavos } from './preco.ts'
 export const nomeDoPagamento: Record<FormaPagamento, string> = {
   DINHEIRO: 'Dinheiro',
   CARTAO: 'Cartão (maquininha)',
-  PIX: 'PIX na hora',
+  PIX: 'PIX',
 }
 
 export const nomeDoTipo: Record<TipoEntrega, string> = {
@@ -29,10 +29,10 @@ export const nomeDoStatus: Record<StatusPedido, string> = {
 
 export const acaoDoStatus: Record<StatusPedido, string> = {
   RECEBIDO: 'Recebido',
-  EM_PREPARO: 'Começar preparo',
+  EM_PREPARO: 'Iniciar preparo',
   PRONTO: 'Marcar pronto',
   SAIU_PARA_ENTREGA: 'Saiu para entrega',
-  ENTREGUE: 'Entregue',
+  ENTREGUE: 'Marcar entregue',
   CANCELADO: 'Cancelar',
 }
 

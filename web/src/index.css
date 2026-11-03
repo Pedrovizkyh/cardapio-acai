@@ -1,18 +1,48 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-acai-50: #f8f1fb;
-  --color-acai-100: #eedcf5;
-  --color-acai-200: #dcb9ea;
-  --color-acai-500: #8e3fae;
-  --color-acai-600: #74308f;
-  --color-acai-700: #5e2477;
-  --color-acai-800: #4a1a5e;
-  --color-acai-900: #2f0f3d;
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Bricolage Grotesque', 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+
+  --color-acai-50: #f6f1f8;
+  --color-acai-100: #ede3f1;
+  --color-acai-200: #ddcbe5;
+  --color-acai-300: #c4a6d1;
+  --color-acai-400: #9d73b0;
+  --color-acai-500: #7a3f93;
+  --color-acai-600: #63307a;
+  --color-acai-700: #561f6b;
+  --color-acai-800: #4a1458;
+  --color-acai-900: #34103f;
+  --color-acai-950: #1e0d24;
+
   --color-lima-300: #dcf27a;
   --color-lima-400: #c6e84a;
+  --color-lima-500: #a9cc2c;
+
+  --color-texto-suave: #6b5a72;
+  --color-perigo: #a3264a;
+  --color-whats: #13773d;
 }
 
-body {
-  @apply bg-acai-50 text-acai-900 antialiased;
+@layer base {
+  body {
+    @apply bg-acai-50 font-sans text-acai-950 antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@utility titulo-secao {
+  @apply font-display text-lg font-bold text-acai-950;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }

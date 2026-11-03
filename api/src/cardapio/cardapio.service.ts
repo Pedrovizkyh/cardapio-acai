@@ -5,13 +5,14 @@ import { PrismaService } from '../prisma/prisma.service.js';
 export class CardapioService {
   constructor(private readonly prisma: PrismaService) {}
 
+  // Produtos esgotados (ativo: false) também vêm, para o cardápio mostrá-los desabilitados.
+  // Eles continuam fora da montagem e o pedido segue recusando produto inativo.
   listar() {
     return this.prisma.categoria.findMany({
       orderBy: { ordem: 'asc' },
       include: {
         produtos: {
-          where: { ativo: true },
-          orderBy: { id: 'asc' },
+          orderBy: [{ ativo: 'desc' }, { id: 'asc' }],
           include: { tamanhos: { orderBy: { preco: 'asc' } } },
         },
       },
