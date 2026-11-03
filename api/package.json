@@ -1,19 +1,18 @@
 {
   "name": "api",
   "version": "0.0.1",
-  "description": "",
+  "description": "API do Cardápio Digital Açaí da Orla",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {
     "build": "nest build",
-    "deploy": "nest deploy",
     "format": "prettier --write \"src/**/*.ts\" \"prisma/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "node dist/main.js",
     "lint": "oxlint --type-aware src/",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -21,7 +20,9 @@
     "test:debug": "vitest --inspect-brk --no-file-parallelism",
     "postinstall": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:seed": "prisma db seed"
+    "prisma:seed": "prisma db seed",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "render:build": "npm ci --include=dev && npm run build && npm run prisma:migrate:deploy"
   },
   "dependencies": {
     "@nestjs/common": "^12.0.1",
@@ -72,5 +73,8 @@
     "prisma@7.10.1": true,
     "@prisma/engines@7.10.1": true,
     "@scarf/scarf": false
+  },
+  "engines": {
+    "node": ">=22.12 <25"
   }
 }
