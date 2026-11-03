@@ -25,7 +25,10 @@ export class PedidosService {
       const [produtos, adicionais] = await Promise.all([
         tx.produto.findMany({
           where: { id: { in: produtoIds } },
-          include: { tamanhos: true },
+          include: {
+            tamanhos: true,
+            categoria: { select: { aceitaAdicionais: true } },
+          },
         }),
         tx.adicional.findMany({ where: { id: { in: adicionalIds } } }),
       ]);

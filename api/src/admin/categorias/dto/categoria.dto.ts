@@ -1,5 +1,6 @@
 import { PartialType } from '@nestjs/swagger';
 import {
+  IsBoolean,
   IsInt,
   IsNotEmpty,
   IsOptional,
@@ -18,6 +19,10 @@ export class CriarCategoriaDto {
   @IsInt()
   @Min(0)
   ordem?: number;
+
+  @IsOptional()
+  @IsBoolean()
+  aceitaAdicionais?: boolean;
 }
 
 export class AtualizarCategoriaDto extends PartialType(CriarCategoriaDto) {}

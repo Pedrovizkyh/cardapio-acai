@@ -12,7 +12,11 @@ describe('CardapioService', () => {
   beforeEach(() => vi.clearAllMocks());
 
   it('devolve o produto com os adicionais ativos', async () => {
-    prisma.produto.findFirst.mockResolvedValue({ id: 1, nome: 'Açaí' });
+    prisma.produto.findFirst.mockResolvedValue({
+      id: 1,
+      nome: 'Açaí',
+      categoria: { aceitaAdicionais: true },
+    });
     prisma.adicional.findMany.mockResolvedValue([{ id: 9, nome: 'Granola' }]);
 
     const produto = await service.detalharProduto(1);
@@ -21,6 +25,20 @@ describe('CardapioService', () => {
     expect(prisma.produto.findFirst).toHaveBeenCalledWith(
       expect.objectContaining({ where: { id: 1, ativo: true } }),
     );
+  });
+
+  it('não oferece adicionais quando a categoria não aceita', async () => {
+    prisma.produto.findFirst.mockResolvedValue({
+      id: 2,
+      nome: 'Suco',
+      categoria: { aceitaAdicionais: false },
+    });
+
+    const produto = await service.detalharProduto(2);
+
+    expect(produto.adicionais).toEqual([]);
+    expect(produto.aceitaAdicionais).toBe(false);
+    expect(prisma.adicional.findMany).not.toHaveBeenCalled();
   });
 
   it('dá 404 quando o produto não existe ou está esgotado', async () => {

@@ -10,10 +10,11 @@ datasource db {
 }
 
 model Categoria {
-  id       Int       @id @default(autoincrement())
-  nome     String    @unique
-  ordem    Int       @default(0)
-  produtos Produto[]
+  id               Int       @id @default(autoincrement())
+  nome             String    @unique
+  ordem            Int       @default(0)
+  aceitaAdicionais Boolean   @default(false)
+  produtos         Produto[]
 }
 
 model Produto {

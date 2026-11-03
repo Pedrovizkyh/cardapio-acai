@@ -13,9 +13,14 @@ type ProdutoSeed = {
   tamanhos: [string, string][];
 };
 
-const cardapio: { nome: string; produtos: ProdutoSeed[] }[] = [
+const cardapio: {
+  nome: string;
+  aceitaAdicionais: boolean;
+  produtos: ProdutoSeed[];
+}[] = [
   {
     nome: 'Açaí',
+    aceitaAdicionais: true,
     produtos: [
       {
         nome: 'Açaí Tradicional',
@@ -47,6 +52,7 @@ const cardapio: { nome: string; produtos: ProdutoSeed[] }[] = [
   },
   {
     nome: 'Cremes',
+    aceitaAdicionais: true,
     produtos: [
       {
         nome: 'Creme de Cupuaçu',
@@ -68,6 +74,7 @@ const cardapio: { nome: string; produtos: ProdutoSeed[] }[] = [
   },
   {
     nome: 'Bebidas',
+    aceitaAdicionais: false,
     produtos: [
       {
         nome: 'Vitamina de Açaí',
@@ -117,12 +124,16 @@ async function main() {
       data: {
         nome: categoria.nome,
         ordem,
+        aceitaAdicionais: categoria.aceitaAdicionais,
         produtos: {
           create: categoria.produtos.map((produto) => ({
             nome: produto.nome,
             descricao: produto.descricao,
             tamanhos: {
-              create: produto.tamanhos.map(([nome, preco]) => ({ nome, preco })),
+              create: produto.tamanhos.map(([nome, preco]) => ({
+                nome,
+                preco,
+              })),
             },
           })),
         },

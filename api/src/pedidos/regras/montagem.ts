@@ -1,12 +1,16 @@
 import { BadRequestException } from '@nestjs/common';
 import type {
   Adicional,
+  Categoria,
   Produto,
   Tamanho,
 } from '../../generated/prisma/client.js';
 import type { ItemPedidoDto } from '../dto/criar-pedido.dto.js';
 
-export type ProdutoComTamanhos = Produto & { tamanhos: Tamanho[] };
+export type ProdutoComTamanhos = Produto & {
+  tamanhos: Tamanho[];
+  categoria: Pick<Categoria, 'aceitaAdicionais'>;
+};
 
 export type ItemMontado = {
   item: ItemPedidoDto;
@@ -34,6 +38,12 @@ export function montarItens(
     if (!tamanho) {
       throw new BadRequestException(
         `O tamanho ${item.tamanhoId} não pertence ao produto ${produto.nome}`,
+      );
+    }
+
+    if (item.adicionais.length > 0 && !produto.categoria.aceitaAdicionais) {
+      throw new BadRequestException(
+        `O produto ${produto.nome} não aceita adicionais`,
       );
     }
 

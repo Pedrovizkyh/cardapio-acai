@@ -21,17 +21,27 @@ export class CardapioService {
   async detalharProduto(id: number) {
     const produto = await this.prisma.produto.findFirst({
       where: { id, ativo: true },
-      include: { tamanhos: { orderBy: { preco: 'asc' } } },
+      include: {
+        tamanhos: { orderBy: { preco: 'asc' } },
+        categoria: { select: { aceitaAdicionais: true } },
+      },
     });
     if (!produto) {
       throw new NotFoundException('Produto não encontrado');
     }
 
-    const adicionais = await this.prisma.adicional.findMany({
-      where: { ativo: true },
-      orderBy: { nome: 'asc' },
-    });
+    const { categoria, ...dados } = produto;
+    const adicionais = categoria.aceitaAdicionais
+      ? await this.prisma.adicional.findMany({
+          where: { ativo: true },
+          orderBy: { nome: 'asc' },
+        })
+      : [];
 
-    return { ...produto, adicionais };
+    return {
+      ...dados,
+      aceitaAdicionais: categoria.aceitaAdicionais,
+      adicionais,
+    };
   }
 }
