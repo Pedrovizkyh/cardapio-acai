@@ -1,0 +1,23 @@
+# Dependências e build
+node_modules/
+dist/
+build/
+coverage/
+
+# Variáveis de ambiente
+.env
+.env.*
+!.env.example
+
+# Documentos pessoais de estudo
+PLANO.md
+CLAUDE.md
+ESTUDO.md
+preview.webp
+.claude/
+
+# Sistema e editores
+.DS_Store
+*.log
+.vscode/
+.idea/
