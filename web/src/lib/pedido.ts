@@ -1,4 +1,10 @@
-import type { FormaPagamento, ItemDoPedido, Pedido, TipoEntrega } from '../api/tipos.ts'
+import type {
+  FormaPagamento,
+  ItemDoPedido,
+  Pedido,
+  StatusPedido,
+  TipoEntrega,
+} from '../api/tipos.ts'
 import { emCentavos } from './preco.ts'
 
 export const nomeDoPagamento: Record<FormaPagamento, string> = {
@@ -10,6 +16,24 @@ export const nomeDoPagamento: Record<FormaPagamento, string> = {
 export const nomeDoTipo: Record<TipoEntrega, string> = {
   ENTREGA: 'Entrega',
   RETIRADA: 'Retirada no balcão',
+}
+
+export const nomeDoStatus: Record<StatusPedido, string> = {
+  RECEBIDO: 'Recebido',
+  EM_PREPARO: 'Em preparo',
+  PRONTO: 'Pronto',
+  SAIU_PARA_ENTREGA: 'Saiu para entrega',
+  ENTREGUE: 'Entregue',
+  CANCELADO: 'Cancelado',
+}
+
+export const acaoDoStatus: Record<StatusPedido, string> = {
+  RECEBIDO: 'Recebido',
+  EM_PREPARO: 'Começar preparo',
+  PRONTO: 'Marcar pronto',
+  SAIU_PARA_ENTREGA: 'Saiu para entrega',
+  ENTREGUE: 'Entregue',
+  CANCELADO: 'Cancelar',
 }
 
 export function somenteDigitos(texto: string): string {

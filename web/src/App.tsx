@@ -8,6 +8,7 @@ import EmConstrucao from './pages/EmConstrucao.tsx'
 import Montagem from './pages/Montagem.tsx'
 import LayoutAdmin from './pages/admin/LayoutAdmin.tsx'
 import Login from './pages/admin/Login.tsx'
+import PedidosAdmin from './pages/admin/PedidosAdmin.tsx'
 
 export default function App() {
   return (
@@ -22,7 +23,7 @@ export default function App() {
       </Route>
       <Route path="/admin/login" element={<Login />} />
       <Route path="/admin" element={<LayoutAdmin />}>
-        <Route index element={<EmConstrucao titulo="Pedidos" />} />
+        <Route index element={<PedidosAdmin />} />
         <Route path="cardapio/*" element={<EmConstrucao titulo="Cardápio" />} />
       </Route>
     </Routes>

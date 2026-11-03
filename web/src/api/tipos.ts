@@ -85,3 +85,5 @@ export type NovoPedido = {
     observacao?: string
   }[]
 }
+
+export type PedidoAdmin = Pedido & { proximosStatus: StatusPedido[] }
