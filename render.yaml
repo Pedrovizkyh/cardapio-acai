@@ -3,6 +3,7 @@ services:
     name: acai-da-orla-api
     runtime: node
     plan: free
+    region: virginia
     rootDir: api
     buildCommand: npm run render:build
     startCommand: npm run start:prod
