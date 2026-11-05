@@ -6,9 +6,18 @@ O cliente monta o açaí pelo celular e faz o pedido, e o dono acompanha tudo nu
 
 "Açaí da Orla" é uma **marca fictícia**, criada só para este projeto de portfólio.
 
-<!-- Coloque aqui o GIF do fluxo: ![Fluxo do cliente e do painel](docs/fluxo.gif) -->
+<table>
+  <tr>
+    <th>Cliente: do cardápio ao WhatsApp</th>
+    <th>Painel: pedido chegando e mudando de status</th>
+  </tr>
+  <tr>
+    <td><img src="docs/fluxo-cliente.gif" alt="Cliente monta um açaí de 500 ml com adicionais, preenche os dados e recebe a confirmação com o botão do WhatsApp" width="300"></td>
+    <td><img src="docs/fluxo-painel.gif" alt="Dono entra no painel, vê o pedido novo e inicia o preparo" width="300"></td>
+  </tr>
+</table>
 
-**Login de demonstração do painel:** `admin@acaidaorla.com` / `admin123` (em `/admin`)
+**Login de demonstração do painel:** `admin@acaidaorla.com` / `admin123` em [cardapio-acai.vercel.app/admin](https://cardapio-acai.vercel.app/admin)
 
 > A API usa o plano gratuito do Render: depois de um tempo parada, o primeiro acesso leva ~50 s para acordar.
 
@@ -29,6 +38,16 @@ O cliente monta o açaí pelo celular e faz o pedido, e o dono acompanha tudo nu
 - Botões para avançar ou cancelar o pedido, seguindo as regras de status.
 - Cadastro de produtos, tamanhos, adicionais e categorias.
 - Botão de esgotado: o produto aparece desabilitado no cardápio na hora e não pode ser pedido.
+
+## Telas
+
+| Cardápio | Montagem | Seu pedido |
+|---|---|---|
+| <img src="docs/cardapio.jpg" alt="Cardápio com categorias e preços a partir de" width="260"> | <img src="docs/montagem.jpg" alt="Montagem do açaí com tamanho, adicionais e preço ao vivo" width="260"> | <img src="docs/carrinho.jpg" alt="Carrinho com entrega ou retirada e dados do cliente" width="260"> |
+
+| Confirmação | Painel de pedidos | Cardápio no painel |
+|---|---|---|
+| <img src="docs/confirmacao.jpg" alt="Confirmação com status do pedido e botão do WhatsApp" width="260"> | <img src="docs/painel-pedidos.jpg" alt="Painel com pedidos por status e total vendido no dia" width="260"> | <img src="docs/painel-cardapio.jpg" alt="Lista de produtos com botão de marcar esgotado" width="260"> |
 
 ## Regras de negócio que importam
 
@@ -71,12 +90,13 @@ O cliente monta o açaí pelo celular e faz o pedido, e o dono acompanha tudo nu
 │       └── common/       # filtro de erros do Prisma
 ├── web/                  # React + Vite
 │   └── src/
-│       ├── pages/        # Cardápio, Montagem, Carrinho, Checkout, Confirmação, admin/
+│       ├── pages/        # Cardápio, Montagem, Carrinho (com checkout), Confirmação, admin/
 │       ├── components/
 │       ├── carrinho/     # store do carrinho
 │       ├── admin/        # sessão e componentes do painel
 │       ├── api/          # cliente axios + hooks do TanStack Query
 │       └── lib/          # preço, pedido, WhatsApp
+├── docs/                 # GIFs e prints usados neste README
 ├── docker-compose.yml    # Postgres local
 ├── render.yaml           # blueprint da API no Render
 └── DEPLOY.md             # passo a passo do deploy
